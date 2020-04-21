@@ -3723,6 +3723,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"codemirror@npm:^5.53.2":
+  version: 5.53.2
+  resolution: "codemirror@npm:5.53.2"
+  checksum: 2/4336d8e7056040a65a289f89619dee7878cdfe993fb9684a6f27bedbf44c1fc0320d22ccd1367469a6ed68006493bb183a6ecbe7ca049289bbb1bff0afafab5c
+  languageName: node
+  linkType: hard
+
 "codeshare-test@workspace:.":
   version: 0.0.0-use.local
   resolution: "codeshare-test@workspace:."
@@ -3730,6 +3737,7 @@ __metadata:
     "@testing-library/jest-dom": ^4.2.4
     "@testing-library/react": ^9.3.2
     "@testing-library/user-event": ^7.1.2
+    codemirror: ^5.53.2
     react: ^16.13.1
     react-dom: ^16.13.1
     react-scripts: 3.4.1

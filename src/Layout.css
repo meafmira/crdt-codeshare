@@ -1,0 +1,10 @@
+.layout {
+  display: flex;
+  min-height: 100%;
+}
+
+.editorSlot,
+.sandboxSlot {
+  flex: 1;
+  display: flex;
+}

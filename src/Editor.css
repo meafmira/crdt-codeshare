@@ -1,0 +1,9 @@
+.editor {
+  flex: 1;
+  display: flex;
+}
+
+.editor .CodeMirror {
+  flex: 1;
+  min-height: 100%;
+}
