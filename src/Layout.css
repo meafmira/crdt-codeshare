@@ -11,6 +11,7 @@
 
 .separator {
   width: 8px;
-  box-shadow: 0px 0px 4px #333;
+  box-shadow: 0px 0px 4px #333, 0px 0px 4px #ddd;
   cursor: col-resize;
+  position: relative;
 }

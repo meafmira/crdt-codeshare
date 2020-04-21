@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout } from "./Layout";
 import { Editor } from "./Editor";
 import { Sandbox } from "./Sandbox";
@@ -11,8 +11,12 @@ import "codemirror/theme/monokai.css";
 import "./App.css";
 
 function App() {
-  const editor = <Editor />;
-  const sandbox = <Sandbox />;
+  const [code, setCode] = useState();
+
+  console.log({ code });
+
+  const editor = <Editor onCodeChange={(code) => setCode(code)} />;
+  const sandbox = <Sandbox code={code} />;
 
   return <Layout editor={editor} sandbox={sandbox} />;
 }

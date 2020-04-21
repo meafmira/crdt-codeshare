@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import "./Layout.css";
 
 export function Layout({ editor, sandbox }) {
+  const editorSlotRef = useRef();
+  const sandboxSlotRef = useRef();
+  const layoutRef = useRef();
+
+  const [editorWidth, setEditorWidth] = useState();
+
   return (
-    <div className="layout">
-      <div className="editorSlot">{editor}</div>
+    <div className="layout" ref={layoutRef}>
+      <div
+        className="editorSlot"
+        style={{ flexGrow: editorWidth * 2 }}
+        ref={editorSlotRef}
+      >
+        {editor}
+      </div>
       <div className="separator"></div>
-      <div className="sandboxSlot">{sandbox}</div>
+      <div className="sandboxSlot" ref={sandboxSlotRef}>
+        {sandbox}
+      </div>
     </div>
   );
 }
