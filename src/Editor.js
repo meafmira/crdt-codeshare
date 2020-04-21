@@ -12,6 +12,8 @@ export function Editor() {
       lineNumbers: true,
       theme: "monokai",
     });
+
+    editor.on("change", console.log);
   }, []);
 
   return <div className="editor" ref={editorRef}></div>;

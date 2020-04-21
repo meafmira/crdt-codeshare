@@ -8,3 +8,9 @@
   flex: 1;
   display: flex;
 }
+
+.separator {
+  width: 8px;
+  box-shadow: 0px 0px 4px #333;
+  cursor: col-resize;
+}
