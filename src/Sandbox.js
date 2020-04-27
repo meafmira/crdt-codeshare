@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 
 import "./Sandbox.css";
 
@@ -25,24 +25,33 @@ const getGeneratedPageURL = ({ js }) => {
       <body>
         <script>
           window.console.log = (...args) => {
-            document.write('<p>');
+            document.write('<p class="log">');
             document.write(...args);
             document.write('</p>');
           }
 
           window.console.info = (...args) => {
-            document.write('<p style="color: orange">');
+            document.write('<p class="log" style="color: orange">');
             document.write(...args);
             document.write('</p>');
           }
 
           window.console.error = (...args) => {
-            document.write('<p style="color: red">');
+            document.write('<p class="log" style="color: red">');
             document.write(...args);
             document.write('</p>');
           }
+
+          window.clear = () => {
+            const list = document.querySelectorAll('.log');
+            for (let node of list) {
+              node.remove();
+            }
+          }
         </script>
-        ${js ? `<script src="${jsURL}"></script>` : ""}
+        <div id="console">
+          ${js ? `<script src="${jsURL}"></script>` : ""}
+        </div>
       </body>
     </html>
   `;
@@ -52,6 +61,7 @@ const getGeneratedPageURL = ({ js }) => {
 
 export function Sandbox({ code }) {
   const [src, setSrc] = useState();
+  const frameRef = useRef();
 
   useEffect(() => {
     const src = getGeneratedPageURL({
@@ -65,5 +75,18 @@ export function Sandbox({ code }) {
     return () => clearTimeout(timeoutId);
   }, [code]);
 
-  return <iframe src={src} className="sandbox-frame" />;
+  const clearSandbox = useCallback(() => {
+    frameRef.current.contentWindow.clear();
+  }, []);
+
+  return (
+    <div className="sandbox-wrapper">
+      <iframe ref={frameRef} src={src} className="sandbox-frame" />
+      <div className="toolbox">
+        <button className="button" onClick={clearSandbox}>
+          Clear
+        </button>
+      </div>
+    </div>
+  );
 }
