@@ -1,9 +1,15 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useLayoutEffect } from "react";
 import CodeMirror from "codemirror";
 
 import "./Editor.css";
 
-export function Editor({ onCodeChange }) {
+export function Editor({
+  onCodeChange,
+  onChanges,
+  onChange,
+  value,
+  doNotUpdate,
+}) {
   const editorRef = useRef();
   const codeMirrorRef = useRef();
 
@@ -19,27 +25,37 @@ export function Editor({ onCodeChange }) {
 
   useEffect(() => {
     if (codeMirrorRef.current) {
-      const handleChange = () => {
-        if (onCodeChange) {
-          onCodeChange(codeMirrorRef.current.doc.getValue());
+      const handleChanges = (state, events) => {
+        if (onChanges) {
+          onChanges(events, state);
         }
+
+        events.forEach((event) => {
+          if (onCodeChange) {
+            onCodeChange(codeMirrorRef.current.doc.getValue());
+          }
+
+          if (onChange) {
+            onChange(event, state);
+          }
+        });
       };
+      codeMirrorRef.current.on("changes", handleChanges);
 
-      codeMirrorRef.current.on("change", handleChange);
-
-      return () => codeMirrorRef.current.off("change", handleChange);
+      return () => codeMirrorRef.current.off("changes", handleChanges);
     }
   }, []);
 
   useEffect(() => {
     if (codeMirrorRef.current) {
-      const handleCursorActivity = console.log;
-      codeMirrorRef.current.on("cursorActivity", handleCursorActivity);
+      const prevValue = codeMirrorRef.current.doc.getValue();
 
-      return () =>
-        codeMirrorRef.current.off("cursorActivity", handleCursorActivity);
+      if (prevValue !== value && !doNotUpdate) {
+        codeMirrorRef.current.doc.setValue(value);
+      } else {
+      }
     }
-  }, []);
+  }, [value]);
 
   return <div className="editor" ref={editorRef}></div>;
 }

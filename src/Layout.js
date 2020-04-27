@@ -11,11 +11,7 @@ export function Layout({ editor, sandbox }) {
 
   return (
     <div className="layout" ref={layoutRef}>
-      <div
-        className="editorSlot"
-        style={{ flexGrow: editorWidth * 2 }}
-        ref={editorSlotRef}
-      >
+      <div className="editorSlot" ref={editorSlotRef}>
         {editor}
       </div>
       <div className="separator"></div>
