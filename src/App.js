@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  useLayoutEffect,
-} from "react";
+import React, { useState, useCallback, useRef, useLayoutEffect } from "react";
 import { useDispatch, useSelector, batch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useSubscription } from "@logux/redux";
@@ -66,7 +60,7 @@ function App() {
         events.forEach(handleEvent);
       });
     },
-    [dispatch]
+    [dispatch, sessionId]
   );
 
   const handleValueChange = useCallback(
@@ -77,7 +71,7 @@ function App() {
         payload: { value, sessionId },
       });
     },
-    [dispatch]
+    [dispatch, sessionId]
   );
 
   if (isSubscribing) return null;

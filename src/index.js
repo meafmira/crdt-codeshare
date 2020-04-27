@@ -22,7 +22,7 @@ const createStore = createLoguxCreator({
   server:
     process.env.NODE_ENV === "development"
       ? "ws://localhost:31337"
-      : "wss://logux.example.com",
+      : "wss://crdt-codeshare.herokuapp.com/",
   userId: "default", // TODO: We will fill it in next chapter
 });
 

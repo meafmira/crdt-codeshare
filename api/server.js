@@ -1,16 +1,24 @@
 const { Server } = require("@logux/server");
+const express = require("express");
 
-const server = new Server(
+const PORT = process.env.PORT || 31337;
+
+const server = express()
+  .use((req, res) => res.send("Codeshare app server"))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+const loguxServer = new Server(
   Server.loadOptions(process, {
     subprotocol: "1.0.0",
     supports: "1.x",
     root: __dirname,
+    server,
   })
 );
 
 const Sessions = new Map();
 
-server.channel("session/:id", {
+loguxServer.channel("session/:id", {
   access(ctx) {
     return true;
   },
@@ -28,7 +36,7 @@ server.channel("session/:id", {
   },
 });
 
-server.type("editor/+input", {
+loguxServer.type("editor/+input", {
   access() {
     return true;
   },
@@ -36,7 +44,7 @@ server.type("editor/+input", {
     return { channel: `session/${action.payload.sessionId}` };
   },
 });
-server.type("editor/+delete", {
+loguxServer.type("editor/+delete", {
   access() {
     return true;
   },
@@ -44,7 +52,7 @@ server.type("editor/+delete", {
     return { channel: `session/${action.payload.sessionId}` };
   },
 });
-server.type("editor/setValue", {
+loguxServer.type("editor/setValue", {
   access() {
     return true;
   },
@@ -54,7 +62,7 @@ server.type("editor/setValue", {
   },
 });
 
-server.type("editor/paste", {
+loguxServer.type("editor/paste", {
   access() {
     return true;
   },
@@ -63,7 +71,7 @@ server.type("editor/paste", {
   },
 });
 
-server.type("editor/updateValue", {
+loguxServer.type("editor/updateValue", {
   access() {
     return true;
   },
@@ -72,8 +80,8 @@ server.type("editor/updateValue", {
   },
 });
 
-server.auth(async (userId, token) => {
+loguxServer.auth(async (userId, token) => {
   return userId === "default";
 });
 
-server.listen();
+loguxServer.listen();
