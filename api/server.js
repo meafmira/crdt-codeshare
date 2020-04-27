@@ -4,7 +4,7 @@ const express = require("express");
 const PORT = process.env.PORT || 31337;
 
 const server = express()
-  .use((req, res) => res.send("Codeshare app server"))
+  .use(express.static("../build/"))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const loguxServer = new Server(
