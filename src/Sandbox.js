@@ -24,7 +24,7 @@ const getGeneratedPageURL = ({ js }) => {
       </head>
       <body>
         <script>
-          window.console.log = (...args) => {
+          window.echo = (...args) => {
             document.write('<p class="log">');
             document.write(...args);
             document.write('</p>');
@@ -59,8 +59,9 @@ const getGeneratedPageURL = ({ js }) => {
   return getBlobURL(source, "text/html");
 };
 
-export function Sandbox({ code }) {
+export function Sandbox({ code: srcCode }) {
   const [src, setSrc] = useState();
+  const [code, setCode] = useState();
   const frameRef = useRef();
 
   useEffect(() => {
@@ -68,12 +69,12 @@ export function Sandbox({ code }) {
       js: code,
     });
 
-    const timeoutId = setTimeout(() => {
-      setSrc(src);
-    }, 1000);
-
-    return () => clearTimeout(timeoutId);
+    setSrc(src);
   }, [code]);
+
+  const runCode = useCallback(() => {
+    setCode(srcCode);
+  }, [srcCode]);
 
   const clearSandbox = useCallback(() => {
     frameRef.current.contentWindow.clear();
@@ -81,8 +82,16 @@ export function Sandbox({ code }) {
 
   return (
     <div className="sandbox-wrapper">
-      <iframe ref={frameRef} src={src} className="sandbox-frame" />
+      <iframe
+        title="Code sandbox"
+        ref={frameRef}
+        src={src}
+        className="sandbox-frame"
+      />
       <div className="toolbox">
+        <button className="button" onClick={runCode}>
+          Run
+        </button>
         <button className="button" onClick={clearSandbox}>
           Clear
         </button>

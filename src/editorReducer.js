@@ -1,5 +1,5 @@
 const editorInitialState = {
-  value: "",
+  value: "// use `echo` function for console output",
 };
 
 export function editorReducer(state = editorInitialState, action) {

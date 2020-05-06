@@ -26,7 +26,10 @@ loguxServer.channel("session/:id", {
     const sessionId = ctx.params.id;
 
     if (!Sessions.has(sessionId)) {
-      Sessions.set(sessionId, { value: "" });
+      Sessions.set(sessionId, {
+        value:
+          "// use `echo` function for console output\n// example: `echo('Hello, world')`\n",
+      });
     }
 
     ctx.sendBack({

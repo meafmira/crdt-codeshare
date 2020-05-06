@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import CodeMirror from "codemirror";
 
 import "./Editor.css";
@@ -44,7 +44,7 @@ export function Editor({
 
       return () => codeMirrorRef.current.off("changes", handleChanges);
     }
-  }, []);
+  }, [onChange, onChanges, onCodeChange]);
 
   useEffect(() => {
     if (codeMirrorRef.current) {
@@ -55,7 +55,7 @@ export function Editor({
       } else {
       }
     }
-  }, [value]);
+  }, [doNotUpdate, value]);
 
   return <div className="editor" ref={editorRef}></div>;
 }

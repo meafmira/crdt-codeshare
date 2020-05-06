@@ -7,6 +7,7 @@ import { nanoid } from "nanoid";
 import { Layout } from "./Layout";
 import { Editor } from "./Editor";
 import { Sandbox } from "./Sandbox";
+import { Loader } from "./Loader";
 
 import "codemirror/mode/javascript/javascript";
 import "codemirror/addon/hint/show-hint";
@@ -74,7 +75,7 @@ function App() {
     [dispatch, sessionId]
   );
 
-  if (isSubscribing) return null;
+  if (isSubscribing) return <Loader />;
 
   const editor = (
     <Editor
